@@ -64,21 +64,21 @@ resource "aws_iam_role_policy" "lambda_policy" {
         ]
         Resource = "arn:aws:logs:*:*:*"
       },
-      {
-        Effect = "Allow"
-        Action = [
-          "dynamodb:GetItem",
-          "dynamodb:PutItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem",
-          "dynamodb:Query",
-          "dynamodb:Scan"
-        ]
-        Resource = [
-          "${aws_dynamodb_table.legacy_builder.arn}",
-          "${aws_dynamodb_table.legacy_builder.arn}/index/*"
-        ]
-      }
+      # {
+      #   Effect = "Allow"
+      #   Action = [
+      #     "dynamodb:GetItem",
+      #     "dynamodb:PutItem",
+      #     "dynamodb:UpdateItem",
+      #     "dynamodb:DeleteItem",
+      #     "dynamodb:Query",
+      #     "dynamodb:Scan"
+      #   ]
+      #   Resource = [
+      #     "${aws_dynamodb_table.legacy_builder.arn}",
+      #     "${aws_dynamodb_table.legacy_builder.arn}/index/*"
+      #   ]
+      # }
     ]
   })
 }
@@ -105,11 +105,11 @@ resource "aws_lambda_function" "api" {
 
   image_uri = data.aws_ecr_image.lambda_image
 
-  environment {
-    variables = {
-      TABLE   = aws_dynamodb_table.legacy_builder.name
-    }
-  }
+  # environment {
+  #   variables = {
+  #     TABLE   = aws_dynamodb_table.legacy_builder.name
+  #   }
+  # }
 
   depends_on = [
     aws_iam_role_policy.lambda_policy
@@ -117,84 +117,28 @@ resource "aws_lambda_function" "api" {
 
 }
 
-# DynamoDB table for patients
-resource "aws_dynamodb_table" "legacy_builder" {
-  name         = var.app_name
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "id"
+# # DynamoDB table for patients
+# resource "aws_dynamodb_table" "legacy_builder" {
+#   name         = var.app_name
+#   billing_mode = "PAY_PER_REQUEST"
+#   hash_key     = "id"
 
-  attribute {
-    name = "id"
-    type = "S"
-  }
+#   attribute {
+#     name = "id"
+#     type = "S"
+#   }
 
-  attribute {
-    name = "email"
-    type = "S"
-  }
+#   attribute {
+#     name = "email"
+#     type = "S"
+#   }
 
-}
+# }
 
 # API Gateway
 resource "aws_api_gateway_rest_api" "api" {
   name = "${var.app_name}-api"
 }
-
-# # API Gateway resource (catch-all)
-# resource "aws_api_gateway_resource" "proxy" {
-#   rest_api_id = aws_api_gateway_rest_api.api.id
-#   parent_id   = aws_api_gateway_rest_api.api.root_resource_id
-#   path_part   = "{proxy+}"
-# }
-
-# # API Gateway method
-# resource "aws_api_gateway_method" "proxy" {
-#   rest_api_id   = aws_api_gateway_rest_api.api.id
-#   resource_id   = aws_api_gateway_resource.proxy.id
-#   http_method   = "ANY"
-#   authorization = "NONE"
-# }
-
-# # API Gateway method for root
-# resource "aws_api_gateway_method" "root" {
-#   rest_api_id   = aws_api_gateway_rest_api.api.id
-#   resource_id   = aws_api_gateway_rest_api.api.root_resource_id
-#   http_method   = "ANY"
-#   authorization = "NONE"
-# }
-
-# # API Gateway integration
-# resource "aws_api_gateway_integration" "proxy" {
-#   rest_api_id = aws_api_gateway_rest_api.api.id
-#   resource_id = aws_api_gateway_method.proxy.resource_id
-#   http_method = aws_api_gateway_method.proxy.http_method
-
-#   integration_http_method = "POST"
-#   type                    = "AWS_PROXY"
-#   uri                     = aws_lambda_function.api.invoke_arn
-# }
-
-# # API Gateway integration for root
-# resource "aws_api_gateway_integration" "root" {
-#   rest_api_id = aws_api_gateway_rest_api.api.id
-#   resource_id = aws_api_gateway_method.root.resource_id
-#   http_method = aws_api_gateway_method.root.http_method
-
-#   integration_http_method = "POST"
-#   type                    = "AWS_PROXY"
-#   uri                     = aws_lambda_function.api.invoke_arn
-# }
-
-# # API Gateway deployment
-# resource "aws_api_gateway_deployment" "api" {
-#   depends_on = [
-#     aws_api_gateway_integration.proxy,
-#     aws_api_gateway_integration.root,
-#   ]
-
-#   rest_api_id = aws_api_gateway_rest_api.api.id
-#   stage_name  = var.environment
-# }
 
 # Lambda permission for API Gateway
 resource "aws_lambda_permission" "api_gateway" {

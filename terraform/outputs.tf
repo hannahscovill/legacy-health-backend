@@ -13,10 +13,10 @@ output "lambda_function_arn" {
   value       = aws_lambda_function.api.arn
 }
 
-output "dynamodb_table_name" {
-  description = "Name of the DynamoDB patients table"
-  value       = aws_dynamodb_table.legacy_builder.name
-}
+# output "dynamodb_table_name" {
+#   description = "Name of the DynamoDB patients table"
+#   value       = aws_dynamodb_table.legacy_builder.name
+# }
 
 output "api_gateway_rest_api_id" {
   description = "ID of the API Gateway REST API"
