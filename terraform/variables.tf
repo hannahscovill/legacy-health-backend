@@ -10,12 +10,6 @@ variable "app_name" {
   default     = "legacy-builder"
 }
 
-variable "ecr_repository_url" {
-  description = "ECR repository URL for the Lambda container image"
-  type        = string
-  default     = "587838441384.dkr.ecr.us-west-2.amazonaws.com/legacy/legacy-builder"
-}
-
 # Pls do not attempt to interpolate this with the app name or something,
 # because actually managing the ECR repo belongs in a seperate stack
 variable "ecr_repository_name" {

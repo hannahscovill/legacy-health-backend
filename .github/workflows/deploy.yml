@@ -43,13 +43,13 @@ jobs:
           docker build -t $ECR_REPOSITORY:latest .
           docker push ${{ steps.account.outputs.id }}.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
       
-      # - name: Setup Terraform
-      #   uses: hashicorp/setup-terraform@v3
-      #   with:
-      #     terraform_version: 1.12.2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.2
       
-      # - name: Apply Terraform
-      #   working-directory: terraform
-      #   run: |
-      #     terraform init
-      #     terraform apply -auto-approve
+      - name: Apply Terraform
+        working-directory: terraform
+        run: |
+          terraform init
+          terraform apply -auto-approve

@@ -103,7 +103,7 @@ resource "aws_lambda_function" "api" {
   memory_size   = 256
   package_type  = "Image"
 
-  image_uri = data.aws_ecr_image.lambda_image
+  image_uri = data.aws_ecr_image.lambda_image.image_uri
 
   # environment {
   #   variables = {

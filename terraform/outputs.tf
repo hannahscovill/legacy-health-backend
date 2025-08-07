@@ -23,7 +23,7 @@ output "api_gateway_rest_api_id" {
   value       = aws_api_gateway_rest_api.api.id
 }
 
-output "ecr_repository_name" {
-  description = "Name of the ECR repository used for the Lambda container"
-  value       = var.ecr_repository_name
+output "ecr_image" {
+  description = "ECR image uri"
+  value       = data.aws_ecr_image.lambda_image.image_uri
 }
