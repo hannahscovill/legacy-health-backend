@@ -1,7 +1,7 @@
-output "api_gateway_url" {
-  description = "URL of the API Gateway"
-  value       = aws_api_gateway_deployment.api.invoke_url
-}
+# output "api_gateway_url" {
+#   description = "URL of the API Gateway"
+#   value       = aws_api_gateway_deployment.api.invoke_url
+# }
 
 output "lambda_function_name" {
   description = "Name of the Lambda function"
@@ -15,7 +15,7 @@ output "lambda_function_arn" {
 
 output "dynamodb_table_name" {
   description = "Name of the DynamoDB patients table"
-  value       = aws_dynamodb_table.patients.name
+  value       = aws_dynamodb_table.legacy_builder.name
 }
 
 output "api_gateway_rest_api_id" {

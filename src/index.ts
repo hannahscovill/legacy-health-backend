@@ -1,8 +1,8 @@
 import { APIGatewayProxyCallback, APIGatewayProxyEvent, Context } from 'aws-lambda';
 
-export const lambdaHandler = (event: APIGatewayProxyEvent, context: Context, callback: APIGatewayProxyCallback) => {
-  // console.log(`Event: ${JSON.stringify(event, null, 2)}`);
-  // console.log(`Context: ${JSON.stringify(context, null, 2)}`);
+export const lambdaHandler = async (event: APIGatewayProxyEvent, context: Context, callback: APIGatewayProxyCallback) => {
+  console.log(`Event: ${JSON.stringify(event, null, 2)}`);
+  console.log(`Context: ${JSON.stringify(context, null, 2)}`);
   return {
     statusCode: 200,
     body: JSON.stringify({
@@ -10,3 +10,6 @@ export const lambdaHandler = (event: APIGatewayProxyEvent, context: Context, cal
     }),
   }
 };
+
+// Export for Docker Lambda runtime
+export { lambdaHandler as handler };
