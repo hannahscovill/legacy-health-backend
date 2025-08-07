@@ -1,0 +1,23 @@
+{
+  "name": "legacy-health-backend",
+  "version": "1.0.0",
+  "description": "A serverless TypeScript API built with AWS Lambda, API Gateway, and DynamoDB for Legacy Health's patient advocacy platform.",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node --watch src/index.ts",
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.152",
+    "ts-node": "^10.9.2",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@types/node": "^24.2.0",
+    "typescript": "^5.9.2"
+  }
+}
