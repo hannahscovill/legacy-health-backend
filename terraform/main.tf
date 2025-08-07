@@ -92,7 +92,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
 
 data "aws_ecr_image" "lambda_image" {
   repository_name = var.ecr_repository_name
-  image_tag       = "latest"
+  image_tag       = var.ecr_image_tag_target
 }
 
 # Lambda function
